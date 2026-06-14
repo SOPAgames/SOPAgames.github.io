@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sopa Games | Indie Game Studio</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background-color: #0b0b0b; color: #ffffff; overflow-x: hidden; line-height: 1.6; }
+        .parallax-hero { position: relative; height: 100vh; width: 100vw; background-image: url('images/fondo-sopa.jpg'); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; display: flex; justify-content: center; align-items: center; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(11,11,11,1) 100%); z-index: 2; }
+        .content-section { position: relative; background-color: #0b0b0b; z-index: 3; padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 2rem; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; color: #e5e5e5; }
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-bottom: 80px; }
+        .game-card { background-color: #141414; border-radius: 8px; overflow: hidden; text-decoration: none; color: white; transition: transform 0.3s ease, box-shadow 0.3s ease; display: block; border: 1px solid #222; }
+        .game-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255,255,255,0.05); border-color: #444; }
+        .game-thumb-wrapper { position: relative; width: 100%; padding-top: 56.25%; overflow: hidden; background-color: #222; }
+        .game-thumb-wrapper img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .game-card:hover .game-thumb-wrapper img { transform: scale(1.05); }
+        .game-info { padding: 24px; text-align: center; }
+        .game-name { font-size: 1.5rem; font-weight: bold; margin-bottom: 8px; }
+        .game-tagline { font-size: 0.95rem; color: #aaa; }
+        .footer-section { border-top: 1px solid #222; padding-top: 60px; text-align: center; }
+        .footer-logo { max-width: 120px; height: auto; margin-bottom: 30px; cursor: pointer; transition: opacity 0.2s; }
+        .footer-logo:hover { opacity: 0.8; }
+        .social-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 40px; flex-wrap: wrap; }
+        .social-icon { color: #888; text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.2s; }
+        .social-icon:hover { color: #fff; }
+        .newsletter-container { max-width: 450px; margin: 0 auto 40px auto; padding: 0 10px; }
+        .newsletter-text { font-size: 0.95rem; color: #ccc; margin-bottom: 20px; }
+        .newsletter-form { display: flex; flex-direction: column; gap: 12px; }
+        .form-group { position: relative; width: 100%; }
+        .form-input { width: 100%; padding: 12px 16px; background-color: #141414; border: 1px solid #333; color: white; border-radius: 4px; font-size: 1rem; }
+        .hidden-field { display: none !important; }
+        .form-submit { padding: 12px 24px; background-color: #ffffff; color: #0b0b0b; border: none; border-radius: 4px; font-size: 1rem; font-weight: bold; cursor: pointer; }
+        .form-message { margin-top: 15px; font-size: 0.9rem; display: none; }
+        .form-message.success { color: #4caf50; display: block; }
+        .copyright { font-size: 0.8rem; color: #555; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="parallax-hero"><div class="hero-overlay"></div></div>
+    <div class="content-section">
+        <h2 class="section-title">Our Games</h2>
+        <div class="games-grid">
+            <a href="games/deeplanders/index.html" class="game-card">
+                <div class="game-thumb-wrapper"><img src="images/thumb-deeplanders.jpg" alt="Deeplanders"></div>
+                <div class="game-info"><div class="game-name">Deeplanders</div><div class="game-tagline">Minimalist construction puzzle game</div></div>
+            </a>
+            <a href="games/charming-hill/index.html" class="game-card">
+                <div class="game-thumb-wrapper"><img src="images/thumb-charming.jpg" alt="Charming Hill"></div>
+                <div class="game-info"><div class="game-name">Charming Hill</div><div class="game-tagline">A tribute to art and memory</div></div>
+            </a>
+        </div>
+        <footer class="footer-section">
+            <img src="images/logo-sopa.png" alt="Sopa Games" class="footer-logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+            <div class="social-links">
+                <a href="https://discord.gg/Zk2TDGsteJ" target="_blank" class="social-icon">Discord</a>
+                <a href="https://x.com/SOPAgames" target="_blank" class="social-icon">X / Twitter</a>
+                <a href="https://bsky.app/profile/SOPAgames.bsky.social" target="_blank" class="social-icon">Bluesky</a>
+                <a href="https://instagram.com/SOPAgames" target="_blank" class="social-icon">Instagram</a>
+                <a href="https://tiktok.com/@SOPA_games" target="_blank" class="social-icon">TikTok</a>
+            </div>
+            <div class="newsletter-container">
+                <p class="newsletter-text">Join our mailing list for updates!</p>
+                <form id="subscribeForm" class="newsletter-form" onsubmit="sendNewsletter(event)">
+                    <input type="text" name="b_honeypot" class="hidden-field" value="">
+                    <input type="hidden" name="origen" value="home">
+                    <div class="form-group"><input type="text" name="nombre" class="form-input" placeholder="Name (Optional)"></div>
+                    <div class="form-group"><input type="email" name="email" class="form-input" placeholder="Your email..." required></div>
+                    <button type="submit" id="submitBtn" class="form-submit">Submit</button>
+                    <div id="formMessage" class="form-message"></div>
+                </form>
+            </div>
+            <p class="copyright">&copy; 2026 Sopa Games. All rights reserved.</p>
+        </footer>
+    </div>
+    <script>
+        const formLoadTime = Date.now();
+        let submitCount = 0;
+
+        function sendNewsletter(event) {
+            event.preventDefault();
+            const form = document.getElementById('subscribeForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const messageDiv = document.getElementById('formMessage');
+
+            // Bloquear si el formulario se llenó en menos de 3 segundos (bot)
+            if (Date.now() - formLoadTime < 3000) return;
+
+            // Bloquear si ya envió 3 veces en la misma sesión
+            if (submitCount >= 3) return;
+
+            if (form.elements['b_honeypot'].value !== '') {
+                messageDiv.className = "form-message success";
+                messageDiv.innerText = "Thank you for subscribing!";
+                form.reset();
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Sending...";
+            messageDiv.style.display = "none";
+
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbz1GQwBjGDdvl34j5dLeNMTpLJ-d55GumdZD7MptirylfHcr4FJXAr6E9cfAgdQ_zTc-Q/exec';
+
+            const nameValue = encodeURIComponent(form.elements['nombre'].value);
+            const emailValue = encodeURIComponent(form.elements['email'].value);
+            const originValue = encodeURIComponent(form.elements['origen'].value);
+            const honeyValue = encodeURIComponent(form.elements['b_honeypot'].value);
+
+            const queryURL = scriptURL + '?nombre=' + nameValue + '&email=' + emailValue + '&origen=' + originValue + '&b_honeypot=' + honeyValue;
+
+            submitCount++;
+            const imgBeacon = new Image();
+            imgBeacon.onload = function() { completeFormSuccess(submitBtn, messageDiv, form); };
+            imgBeacon.onerror = function() { completeFormSuccess(submitBtn, messageDiv, form); };
+            imgBeacon.src = queryURL;
+        }
+
+        function completeFormSuccess(btn, msgDiv, formElement) {
+            btn.disabled = false;
+            btn.innerText = "Submit";
+            msgDiv.className = "form-message success";
+            msgDiv.innerText = "Thank you for subscribing!";
+            formElement.reset();
+        }
+    </script>
+</body>
+</html>
