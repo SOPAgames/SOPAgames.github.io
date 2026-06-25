@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charming Hill | Sopa Games</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <style>
         *, *::before, *::after {
             box-sizing: border-box;
@@ -53,7 +54,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(11,11,11,1) 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.15) 55%, rgba(11,11,11,1) 100%);
             z-index: 2;
         }
 
@@ -340,23 +341,28 @@
             user-select: none;
         }
 
+        .scroll-indicator { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 10; opacity: 0.6; cursor: pointer; animation: scrollBounce 2s ease-in-out infinite; transition: opacity 0.2s; }
+        .scroll-indicator:hover { opacity: 1; }
+        @keyframes scrollBounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
+        .home-btn { position: fixed; top: 20px; left: 20px; z-index: 100; color: white; text-decoration: none; background: rgba(0,0,0,0.45); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; backdrop-filter: blur(4px); transition: background 0.2s; }
+        .home-btn:hover { background: rgba(0,0,0,0.8); }
         @media (max-width: 768px) {
-            .screenshot-gallery {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            .game-title {
-                font-size: 2.2rem;
-            }
+            .screenshot-gallery { grid-template-columns: 1fr; gap: 15px; }
+            .game-title { font-size: 2.2rem; }
+            .video-hero { height: 55vh; }
+            .game-container { margin: 55vh auto 0 auto; }
         }
     </style>
 </head>
 <body>
 
+    <a href="../../index.html" class="home-btn">← Home</a>
     <div class="video-hero">
-        <!-- Tráiler de Charming Hill (Fesm9STkemQ) oculto localmente -->
         <iframe id="bgVideo" style="display: none;" src="https://www.youtube.com/embed/Fesm9STkemQ?autoplay=1&mute=1&loop=1&playlist=Fesm9STkemQ&controls=0&modestbranding=1" frameborder="0" allow="autoplay; encrypted-media"></iframe>
         <div class="hero-overlay"></div>
+        <div class="scroll-indicator" onclick="document.querySelector('.game-container').scrollIntoView({behavior:'smooth'})">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
     </div>
 
     <div class="game-container">
@@ -460,34 +466,26 @@
             submitBtn.innerText = "Sending..."; 
             messageDiv.style.display = "none";
 
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbz1GQwBjGDdvl34j5dLeNMTpLJ-d55GumdZD7MptirylfHcr4FJXAr6E9cfAgdQ_zTc-Q/exec'; 
-            
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwejjICuth1SH2NZMxViRt0b0E9EkGPau41kXsUdKse1aRf-90eLvpRW4fdzFa7j1GqJQ/exec';
+
             const nameValue = encodeURIComponent(form.elements['nombre'].value);
             const emailValue = encodeURIComponent(form.elements['email'].value);
             const originValue = encodeURIComponent(form.elements['origen'].value);
             const honeyValue = encodeURIComponent(form.elements['b_honeypot'].value);
-            
+
             const queryURL = scriptURL + '?nombre=' + nameValue + '&email=' + emailValue + '&origen=' + originValue + '&b_honeypot=' + honeyValue;
 
             submitCount++;
-            const imgBeacon = new Image();
-            
-            imgBeacon.onload = function() {
-                completeFormSuccess(submitBtn, messageDiv, form);
-            };
-            
-            imgBeacon.onerror = function() {
-                completeFormSuccess(submitBtn, messageDiv, form);
-            };
-
-            imgBeacon.src = queryURL;
+            fetch(queryURL, { mode: 'no-cors' })
+                .finally(function() { completeFormSuccess(submitBtn, messageDiv, form); });
         }
 
         function completeFormSuccess(btn, msgDiv, formElement) {
-            btn.disabled = false; 
-            btn.innerText = "Submit"; 
-            msgDiv.className = "form-message success"; 
-            msgDiv.innerText = "Thank you for subscribing!"; 
+            btn.disabled = false;
+            btn.innerText = "Submit";
+            msgDiv.style.display = "";
+            msgDiv.className = "form-message success";
+            msgDiv.innerText = "Thank you for subscribing!";
             formElement.reset();
         }
     </script>
