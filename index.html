@@ -112,10 +112,8 @@
             const queryURL = scriptURL + '?nombre=' + nameValue + '&email=' + emailValue + '&origen=' + originValue + '&b_honeypot=' + honeyValue;
 
             submitCount++;
-            const imgBeacon = new Image();
-            imgBeacon.onload = function() { completeFormSuccess(submitBtn, messageDiv, form); };
-            imgBeacon.onerror = function() { completeFormSuccess(submitBtn, messageDiv, form); };
-            imgBeacon.src = queryURL;
+            fetch(queryURL, { mode: 'no-cors' })
+                .finally(function() { completeFormSuccess(submitBtn, messageDiv, form); });
         }
 
         function completeFormSuccess(btn, msgDiv, formElement) {
