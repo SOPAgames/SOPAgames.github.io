@@ -102,7 +102,7 @@
             submitBtn.innerText = "Sending...";
             messageDiv.style.display = "none";
 
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbz1GQwBjGDdvl34j5dLeNMTpLJ-d55GumdZD7MptirylfHcr4FJXAr6E9cfAgdQ_zTc-Q/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwn1Uil4TtYDo3IndLQzgfpNQUxZ-NyryuhDe9HcNbL-EHc7nNSJ83eC8awhF9YL5dX/exec';
 
             const nameValue = encodeURIComponent(form.elements['nombre'].value);
             const emailValue = encodeURIComponent(form.elements['email'].value);
@@ -121,6 +121,7 @@
         function completeFormSuccess(btn, msgDiv, formElement) {
             btn.disabled = false;
             btn.innerText = "Submit";
+            msgDiv.style.display = "";
             msgDiv.className = "form-message success";
             msgDiv.innerText = "Thank you for subscribing!";
             formElement.reset();
